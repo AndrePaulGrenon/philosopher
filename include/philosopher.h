@@ -5,6 +5,17 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <pthread.h>
+#include <stdbool.h>
+
+typedef struct	s_phil
+{
+	int		index;
+	int		fourchette;
+	void	*data;
+	bool	thinking;
+	bool	sleeping;
+	bool	eating;
+}				t_phil;
 
 typedef struct	s_data
 {
@@ -13,13 +24,8 @@ typedef struct	s_data
 	int		t_to_eat;
 	int		t_to_sleep;
 	int		nb_to_fill;
+	t_phil	**agora;
 }			t_data;
-
-typedef struct	s_phil
-{
-	int		index;
-	void	*data;
-}				t_phil;
 
 int		ft_atoi(char *str);
 t_data	*ft_init_data(char **argv);
