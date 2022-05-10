@@ -20,6 +20,8 @@ BONUS = philosopher_bonus
 SRCS_C	= philosopher.c \
 		  ft_utils.c \
 		  ft_init_data.c \
+		  ft_arrival.c \
+		  ft_behave.c \
 
 INCLUDE_H	= philosopher.h 
 

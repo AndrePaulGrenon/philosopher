@@ -17,3 +17,25 @@ int	ft_atoi(char *str)
 	}
 	return (nb);
 }
+
+void	ft_free_data(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	if (data)
+	{
+		if (data->agora)
+		{
+			while (data->agora[i])
+			{
+				free(data->agora[i]);
+				free(data->fork_set[i++]);
+			}
+			free(data->agora);
+			free(data->fork_set);
+		}
+		free(data);
+	}
+	return ;
+}
