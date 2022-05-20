@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 14:09:33 by agrenon           #+#    #+#             */
-/*   Updated: 2022/05/20 14:10:41 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/05/20 15:32:07 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 typedef struct s_phil
 {
 	int				index;
+	int				n_eat;
 	int				fourchette;
 	long int		t_to_death;
 	long int		slp_start;

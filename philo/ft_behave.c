@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:14:16 by agrenon           #+#    #+#             */
-/*   Updated: 2022/05/17 19:16:05 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/05/20 16:39:05 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	ft_eat(t_phil *me, t_data *data, long int timer)
 		printf("%ldms %d has taken a fork\n", ft_clock(me), me->index);
 		pthread_mutex_lock(me->right);
 		printf("%ldms %d has taken a fork\n", ft_clock(me), me->index);
+		me->n_eat++;
 		me->t_to_death = ft_clock(me) + data->t_to_die;
 		me->eat_start = ft_clock(me);
 		printf("%ldms %d is eating\n", ft_clock(me), me->index);
@@ -68,7 +69,7 @@ void	*ft_behave(void *data)
 		timer = ft_clock(me);
 		if (me->sleeping)
 			ft_sleep(me, timer, data_d);
-		else if (me->thinking || me->eating)
+		else if ((me->thinking || me->eating) && data_d->nb_phil > 1)
 			ft_eat(me, data_d, timer);
 		if (me->t_to_death - timer <= 0 || data_d->is_on == false)
 			break ;
