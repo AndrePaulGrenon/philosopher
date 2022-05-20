@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philosopher.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/20 14:09:33 by agrenon           #+#    #+#             */
+/*   Updated: 2022/05/20 14:10:41 by agrenon          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILOSOPHER_H
 # define PHILOSOPHER_H
 
@@ -8,7 +20,7 @@
 # include <stdbool.h>
 # include <sys/time.h>
 
-typedef struct	s_phil
+typedef struct s_phil
 {
 	int				index;
 	int				fourchette;
@@ -24,7 +36,7 @@ typedef struct	s_phil
 	pthread_mutex_t	*right;
 }				t_phil;
 
-typedef struct	s_data
+typedef struct s_data
 {
 	bool				is_on;
 	int					nb_phil;
