@@ -22,6 +22,7 @@ SRCS_C	= philosopher.c \
 		  ft_init_data.c \
 		  ft_arrival.c \
 		  ft_behave.c \
+		  ft_sleep.c
 
 INCLUDE_H	= philosopher.h 
 

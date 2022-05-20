@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_arrival.c                                       :+:      :+:    :+:   */
+/*   ft_sleep.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/17 18:57:40 by agrenon           #+#    #+#             */
-/*   Updated: 2022/05/17 19:04:46 by agrenon          ###   ########.fr       */
+/*   Created: 2022/05/17 19:16:16 by agrenon           #+#    #+#             */
+/*   Updated: 2022/05/17 19:29:22 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-void	ft_introduce_debate(t_data *data)
+long int	ft_sleep(t_phil *me, long int timer, t_data *data)
 {
-	int			i;
-	pthread_t	*p_thread;
-
-	i = 0;
-	while (data->agora[i])
+	if (me->slp_start == 0 && me->sleeping)
 	{
-		p_thread = &data->agora[i]->body;
-		pthread_create(p_thread, NULL, ft_behave, (void *) data->agora[i]);
-		i++;
+		me->slp_start = timer;
+		printf("%ldms %d is sleeping\n", timer, me->index);
 	}
-	return ;
+	else if (timer - me->slp_start >= data->t_to_sleep)
+	{
+		me->sleeping = false;
+		me->thinking = true;
+		me->slp_start = 0;
+		printf("%ldms %d is thinking\n", timer, me->index);
+	}
+	return (0);
 }
