@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 14:09:33 by agrenon           #+#    #+#             */
-/*   Updated: 2022/05/20 15:32:07 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/05/25 17:35:24 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_data
 	int					nb_to_fill;
 	long int			t_start;
 	pthread_mutex_t		**fork_set;
+	bool				*fork_use;
 	t_phil				**agora;
 }			t_data;
 
@@ -58,5 +59,8 @@ void		*ft_behave(void *data);
 void		ft_eat(t_phil *me, t_data *data, long int timer);
 long int	ft_sleep(t_phil *me, long int timer, t_data *data);
 long int	ft_clock(t_phil *me);
+void		ft_is_eating(t_phil *me, t_data *data);
+void		ft_take_left(t_phil *me, t_data *data, int fork);
+void		ft_take_right(t_phil *me, t_data *data, int fork);
 
 #endif

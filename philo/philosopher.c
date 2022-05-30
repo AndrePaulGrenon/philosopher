@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:09:21 by agrenon           #+#    #+#             */
-/*   Updated: 2022/05/20 17:26:28 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/05/28 13:44:47 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,15 @@ int	ft_ok(t_data *data, char **argv)
 	everyone = true;
 	while (data->agora[i])
 	{
-		if (data->agora[i]->n_eat < data->nb_to_fill)
-			return (0);
 		if (data->agora[i]->t_to_death - ft_clock(data->agora[i]) <= 0)
 			return (i + 1);
+		i++;
+	}
+	i = 0;
+	while (data->agora[i])
+	{
+		if (data->agora[i]->n_eat < data->nb_to_fill)
+			return (0);
 		i++;
 	}
 	if (argv[5])
@@ -48,7 +53,8 @@ void	ft_moderateur(t_data *data, char **argv)
 	data->is_on = false;
 	usleep(1000);
 	if (i > 0)
-		printf("%ldms Philosopher %d is dead\n", ft_clock(data->agora[i]), i);
+		printf("%ldms Philosopher %d is dead\n",
+			ft_clock(data->agora[i - 1]), i);
 	if (i < 0)
 		printf("All Philosophers are full\n");
 	i = 0;

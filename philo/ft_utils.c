@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:11:08 by agrenon           #+#    #+#             */
-/*   Updated: 2022/05/20 14:59:34 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/05/28 13:42:23 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	ft_free_data(t_data *data)
 			}
 			free(data->agora);
 			free(data->fork_set);
+			free(data->fork_use);
 		}
 		free(data);
 	}

@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:12:00 by agrenon           #+#    #+#             */
-/*   Updated: 2022/05/20 17:47:53 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/05/28 13:56:09 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,22 @@ void	ft_point_fork(t_data *data)
 	return ;
 }
 
+void	ft_fork_set(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	data->fork_use = malloc(sizeof(bool) * data->nb_phil + 1);
+	data->fork_use[data->nb_phil] = NULL;
+	while (i < data->nb_phil)
+		data->fork_use[i++] = false;
+	data->fork_set = malloc(sizeof(pthread_mutex_t *) * data->nb_phil + 1);
+	data->fork_set[data->nb_phil] = NULL;
+	data->agora = malloc(sizeof(t_data *) * data->nb_phil + 1);
+	data->agora[data->nb_phil] = NULL;
+	return ;
+}
+
 void	ft_set_agora(t_data *data, char **argv)
 {
 	int				i;
@@ -47,10 +63,7 @@ void	ft_set_agora(t_data *data, char **argv)
 	if (data->nb_phil < 1 || data->t_to_die < 1
 		|| data->t_to_sleep < 1 || data->t_to_eat < 1)
 		return ;
-	data->fork_set = malloc(sizeof(pthread_mutex_t *) * data->nb_phil + 1);
-	data->fork_set[data->nb_phil] = NULL;
-	data->agora = malloc(sizeof(t_data *) * data->nb_phil + 1);
-	data->agora[data->nb_phil] = NULL;
+	ft_fork_set(data);
 	data->t_start = time.tv_sec * 1000 + (long int) time.tv_usec / 1000;
 	return ;
 }

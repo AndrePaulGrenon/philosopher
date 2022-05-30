@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:14:16 by agrenon           #+#    #+#             */
-/*   Updated: 2022/05/20 16:39:05 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/05/28 13:26:03 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,29 +26,43 @@ long int	ft_clock(t_phil *me)
 	return (t_time);
 }
 
+bool	ft_is_lock(int fork, t_data *data)
+{
+	if (data->fork_use[fork])
+		return (true);
+	return (false);
+}
+
+void	ft_done_eating(t_phil *me, t_data *data, int left, int right)
+{
+	pthread_mutex_unlock(me->right);
+	pthread_mutex_unlock(me->left);
+	data->fork_use[right] = false;
+	data->fork_use[left] = false;
+	me->sleeping = true;
+	me->eating = false;
+	me->eat_start = 0;
+	return ;
+}
+
 void	ft_eat(t_phil *me, t_data *data, long int timer)
 {
-	if (me->thinking && me->eat_start == 0)
-	{
-		me->thinking = false;
-		me->eating = true;
-		pthread_mutex_lock(me->left);
-		printf("%ldms %d has taken a fork\n", ft_clock(me), me->index);
-		pthread_mutex_lock(me->right);
-		printf("%ldms %d has taken a fork\n", ft_clock(me), me->index);
-		me->n_eat++;
-		me->t_to_death = ft_clock(me) + data->t_to_die;
-		me->eat_start = ft_clock(me);
-		printf("%ldms %d is eating\n", ft_clock(me), me->index);
-	}
-	else if (timer - me->eat_start >= data->t_to_eat)
-	{
-		pthread_mutex_unlock(me->right);
-		pthread_mutex_unlock(me->left);
-		me->sleeping = true;
-		me->eating = false;
-		me->eat_start = 0;
-	}
+	int	left;
+	int	right;
+
+	right = me->index - 1;
+	if (me->index == 1)
+		left = data->nb_phil - 1;
+	else
+		left = me->index - 2;
+	if (!ft_is_lock(right, data))
+		ft_take_right(me, data, right);
+	if (!ft_is_lock(left, data) && right != left)
+		ft_take_left(me, data, left);
+	if (me->fourchette > 1)
+		ft_is_eating(me, data);
+	else if (timer - me->eat_start >= data->t_to_eat && me->thinking == false)
+		ft_done_eating(me, data, left, right);
 	return ;
 }
 
@@ -66,10 +80,11 @@ void	*ft_behave(void *data)
 		usleep(1000);
 	while (1)
 	{
+		usleep(100);
 		timer = ft_clock(me);
 		if (me->sleeping)
 			ft_sleep(me, timer, data_d);
-		else if ((me->thinking || me->eating) && data_d->nb_phil > 1)
+		else if ((me->thinking || me->eating))
 			ft_eat(me, data_d, timer);
 		if (me->t_to_death - timer <= 0 || data_d->is_on == false)
 			break ;
